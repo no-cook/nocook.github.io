@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#22c55e"/>
+      <stop offset="100%" stop-color="#86efac"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Subtle grid lines -->
+  <line x1="0" y1="210" x2="1200" y2="210" stroke="#334155" stroke-width="1" opacity="0.4"/>
+  <line x1="0" y1="420" x2="1200" y2="420" stroke="#334155" stroke-width="1" opacity="0.4"/>
+  <line x1="400" y1="0" x2="400" y2="630" stroke="#334155" stroke-width="1" opacity="0.4"/>
+  <line x1="800" y1="0" x2="800" y2="630" stroke="#334155" stroke-width="1" opacity="0.4"/>
+
+  <!-- Green left bar accent -->
+  <rect x="0" y="0" width="8" height="630" fill="#22c55e"/>
+
+  <!-- Logo -->
+  <text x="96" y="200" font-family="Arial Black, Arial, sans-serif" font-size="110" font-weight="900" fill="#22c55e">No</text>
+  <text x="264" y="200" font-family="Arial Black, Arial, sans-serif" font-size="110" font-weight="900" fill="#f1f5f9">Cook</text>
+
+  <!-- Tagline -->
+  <text x="96" y="270" font-family="Arial, sans-serif" font-size="36" font-weight="400" fill="#94a3b8">Hit your calories. Skip the cooking.</text>
+
+  <!-- Divider -->
+  <rect x="96" y="310" width="80" height="4" rx="2" fill="#22c55e"/>
+
+  <!-- Feature pills -->
+  <!-- Pill 1 -->
+  <rect x="96" y="350" width="280" height="52" rx="26" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+  <text x="216" y="382" font-family="Arial, sans-serif" font-size="22" fill="#f1f5f9" text-anchor="middle">🏪 Meijer products</text>
+
+  <!-- Pill 2 -->
+  <rect x="396" y="350" width="240" height="52" rx="26" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+  <text x="516" y="382" font-family="Arial, sans-serif" font-size="22" fill="#f1f5f9" text-anchor="middle">🎯 Calorie tracking</text>
+
+  <!-- Pill 3 -->
+  <rect x="656" y="350" width="210" height="52" rx="26" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+  <text x="761" y="382" font-family="Arial, sans-serif" font-size="22" fill="#f1f5f9" text-anchor="middle">🛒 Grocery list</text>
+
+  <!-- Sample meal cards -->
+  <rect x="96" y="430" width="310" height="80" rx="14" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+  <text x="130" y="466" font-family="Arial, sans-serif" font-size="28">🌅</text>
+  <text x="175" y="462" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#f1f5f9">Premier Protein Shake</text>
+  <text x="175" y="484" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">160 cal · 30g protein</text>
+  <text x="368" y="472" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#22c55e" text-anchor="end">$2.49</text>
+
+  <rect x="426" y="430" width="310" height="80" rx="14" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+  <text x="460" y="466" font-family="Arial, sans-serif" font-size="28">☀️</text>
+  <text x="505" y="462" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#f1f5f9">Meijer Caesar Salad Kit</text>
+  <text x="505" y="484" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">290 cal · 22g protein</text>
+  <text x="698" y="472" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#22c55e" text-anchor="end">$3.99</text>
+
+  <rect x="756" y="430" width="310" height="80" rx="14" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+  <text x="790" y="466" font-family="Arial, sans-serif" font-size="28">🌙</text>
+  <text x="835" y="462" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#f1f5f9">Healthy Choice Bowl</text>
+  <text x="835" y="484" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">380 cal · 27g protein</text>
+  <text x="1028" y="472" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#22c55e" text-anchor="end">$4.99</text>
+
+  <!-- Domain -->
+  <text x="1170" y="600" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#334155" text-anchor="end">nocook.app</text>
+</svg>
