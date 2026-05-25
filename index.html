@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0f172a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="NoCook">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<title>NoCook — Hit your calories. Skip the cooking.</title>
+<style>
+  :root {
+    --green: #22c55e;
+    --green-dark: #16a34a;
+    --bg: #0f172a;
+    --surface: #1e293b;
+    --surface2: #334155;
+    --text: #f1f5f9;
+    --muted: #94a3b8;
+    --border: #334155;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; min-height: 100vh; overflow-x: hidden; }
+
+  /* NAV */
+  nav { padding: 0 32px; height: 64px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; background: rgba(15,23,42,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .logo { font-size: 22px; font-weight: 900; color: var(--green); letter-spacing: -0.5px; }
+  .logo span { color: var(--text); }
+  .nav-cta { background: var(--green); color: #000; border: none; border-radius: 10px; padding: 10px 22px; font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.15s; }
+  .nav-cta:hover { background: var(--green-dark); transform: translateY(-1px); }
+
+  /* HERO */
+  .hero { text-align: center; padding: 96px 24px 80px; max-width: 760px; margin: 0 auto; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.25); border-radius: 99px; padding: 6px 16px; font-size: 13px; font-weight: 600; color: var(--green); margin-bottom: 28px; }
+  .hero h1 { font-size: clamp(40px, 7vw, 72px); font-weight: 900; line-height: 1.05; letter-spacing: -1.5px; margin-bottom: 20px; }
+  .hero h1 .grad { background: linear-gradient(135deg, #22c55e, #86efac); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero p { font-size: clamp(16px, 2.5vw, 20px); color: var(--muted); line-height: 1.6; max-width: 540px; margin: 0 auto 40px; }
+  .hero-actions { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .btn-signin { display: inline-flex; align-items: center; gap: 12px; background: #fff; color: #1a1a1a; border: none; border-radius: 12px; padding: 16px 28px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.15s; box-shadow: 0 4px 24px rgba(0,0,0,0.3); }
+  .btn-signin:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.4); }
+  .btn-signin svg { flex-shrink: 0; }
+  .hero-note { font-size: 13px; color: var(--muted); }
+
+  /* SOCIAL PROOF STRIP */
+  .proof-strip { display: flex; align-items: center; justify-content: center; gap: 32px; padding: 24px 32px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+  .proof-item { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--muted); }
+  .proof-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+
+  /* FEATURES */
+  .section { max-width: 1000px; margin: 0 auto; padding: 80px 24px; }
+  .section-label { font-size: 12px; font-weight: 700; color: var(--green); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+  .section-title { font-size: clamp(28px, 4vw, 42px); font-weight: 900; line-height: 1.15; letter-spacing: -0.5px; margin-bottom: 16px; }
+  .section-sub { font-size: 17px; color: var(--muted); line-height: 1.6; max-width: 520px; }
+
+  .features-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 48px; }
+  .feat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 28px; transition: border-color 0.2s; }
+  .feat-card:hover { border-color: rgba(34,197,94,0.35); }
+  .feat-icon { font-size: 32px; margin-bottom: 16px; }
+  .feat-title { font-size: 18px; font-weight: 800; margin-bottom: 8px; }
+  .feat-text { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+  /* STEPS */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 48px; }
+  .step { text-align: center; padding: 32px 20px; }
+  .step-num { width: 44px; height: 44px; border-radius: 12px; background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.25); display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 900; color: var(--green); margin: 0 auto 16px; }
+  .step-title { font-size: 17px; font-weight: 800; margin-bottom: 8px; }
+  .step-text { font-size: 14px; color: var(--muted); line-height: 1.6; }
+  .step-arrow { display: flex; align-items: center; justify-content: center; color: var(--border); font-size: 24px; padding-top: 44px; }
+
+  /* MACRO PREVIEW */
+  .preview-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 28px; margin-top: 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: center; }
+  .preview-meals { display: flex; flex-direction: column; gap: 10px; }
+  .preview-meal { background: var(--surface2); border-radius: 12px; padding: 14px 16px; display: flex; align-items: center; gap: 12px; }
+  .preview-meal-emoji { font-size: 24px; flex-shrink: 0; }
+  .preview-meal-name { font-size: 13px; font-weight: 700; }
+  .preview-meal-cal { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .preview-meal-price { margin-left: auto; font-size: 13px; font-weight: 700; color: var(--green); }
+  .preview-stats { display: flex; flex-direction: column; gap: 16px; }
+  .preview-stat-label { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .bar-wrap { background: var(--surface2); border-radius: 99px; height: 10px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 99px; }
+  .preview-total { background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.25); border-radius: 12px; padding: 16px; text-align: center; }
+  .preview-total-val { font-size: 32px; font-weight: 900; color: var(--green); }
+  .preview-total-label { font-size: 12px; color: var(--muted); font-weight: 600; margin-top: 2px; }
+
+  /* CTA SECTION */
+  .cta-section { text-align: center; padding: 80px 24px 96px; max-width: 600px; margin: 0 auto; }
+  .cta-section h2 { font-size: clamp(32px, 5vw, 52px); font-weight: 900; line-height: 1.1; letter-spacing: -1px; margin-bottom: 16px; }
+  .cta-section p { font-size: 17px; color: var(--muted); margin-bottom: 40px; line-height: 1.6; }
+
+  /* FOOTER */
+  footer { border-top: 1px solid var(--border); padding: 24px 32px; display: flex; align-items: center; justify-content: space-between; }
+  .footer-logo { font-size: 16px; font-weight: 800; color: var(--green); }
+  .footer-logo span { color: var(--muted); }
+  footer p { font-size: 13px; color: var(--muted); }
+
+  /* AUTH LOADING OVERLAY */
+  #auth-checking { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; z-index: 9999; }
+  #auth-checking.hidden { display: none; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .spinner { width: 32px; height: 32px; border: 3px solid var(--border); border-top-color: var(--green); border-radius: 50%; animation: spin 0.7s linear infinite; }
+
+  @media (max-width: 700px) {
+    nav { padding: 0 20px; }
+    .hero { padding: 64px 20px 56px; }
+    .features-grid { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr; }
+    .step-arrow { display: none; }
+    .preview-card { grid-template-columns: 1fr; }
+    .proof-strip { gap: 16px; }
+    footer { flex-direction: column; gap: 8px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div id="auth-checking"><div class="spinner"></div></div>
+
+<nav>
+  <div class="logo">No<span>Cook</span></div>
+  <button class="nav-cta" onclick="handleSignIn()">Sign in with Google</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">🏪 Built for Meijer shoppers</div>
+  <h1>Hit your calories.<br><span class="grad">Skip the cooking.</span></h1>
+  <p>NoCook builds your full day of meals from real Meijer products — ready-to-eat, no stove required. Enter your goal, get a plan, grab the groceries.</p>
+  <div class="hero-actions">
+    <button class="btn-signin" onclick="handleSignIn()">
+      <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/><path fill="none" d="M0 0h48v48H0z"/></svg>
+      Continue with Google
+    </button>
+    <p class="hero-note">Free · No app store · Works offline</p>
+  </div>
+</section>
+
+<!-- PROOF STRIP -->
+<div class="proof-strip">
+  <div class="proof-item"><div class="proof-dot"></div>100% Meijer products</div>
+  <div class="proof-item"><div class="proof-dot"></div>Zero cooking required</div>
+  <div class="proof-item"><div class="proof-dot"></div>Syncs across all your devices</div>
+  <div class="proof-item"><div class="proof-dot"></div>Calorie &amp; macro tracking</div>
+  <div class="proof-item"><div class="proof-dot"></div>Aisle-sorted grocery list</div>
+</div>
+
+<!-- FEATURES -->
+<section class="section">
+  <div class="section-label">Features</div>
+  <div class="section-title">Everything you need.<br>Nothing you don't.</div>
+  <div class="section-sub">A meal planner built for real life — grab-and-go foods from Meijer, sorted by aisle, matched to your calorie goal.</div>
+
+  <div class="features-grid">
+    <div class="feat-card">
+      <div class="feat-icon">🎯</div>
+      <div class="feat-title">Personalized calorie targets</div>
+      <div class="feat-text">Enter your current weight, goal weight, height, age, and activity level. We calculate your TDEE and set a daily deficit automatically.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">✨</div>
+      <div class="feat-title">One-tap meal generation</div>
+      <div class="feat-text">Hit Generate and get a full week of meals — breakfast, lunch, dinner, and snacks — all real Meijer products that fit your calories and diet preference.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">🛒</div>
+      <div class="feat-title">Aisle-sorted grocery list</div>
+      <div class="feat-text">Your shopping list is automatically sorted by Meijer aisle so you can fly through the store without backtracking. Print it or check items off as you go.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">☁️</div>
+      <div class="feat-title">Real-time cross-device sync</div>
+      <div class="feat-text">Generate a plan on your laptop, open the grocery list on your phone in the store. Everything syncs instantly via your Google account.</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section" style="padding-top:0">
+  <div class="section-label">How it works</div>
+  <div class="section-title">Three steps to a week<br>of meals.</div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-title">Set your goal</div>
+      <div class="step-text">Enter your stats. We calculate your maintenance calories and set a 500 cal/day deficit — about 1 lb lost per week.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-title">Generate your plan</div>
+      <div class="step-text">One tap builds a full 7-day plan from the Meijer food database, hitting your calorie and macro targets every day.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-title">Grab the groceries</div>
+      <div class="step-text">Your list appears sorted by aisle. Check items off as you shop. Everything is ready to eat — no prep, no cooking.</div>
+    </div>
+  </div>
+
+  <!-- Mini meal preview -->
+  <div class="preview-card">
+    <div class="preview-meals">
+      <div style="font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px">Sample day</div>
+      <div class="preview-meal">
+        <div class="preview-meal-emoji">🌅</div>
+        <div><div class="preview-meal-name">Premier Protein Shake</div><div class="preview-meal-cal">160 cal · 30g protein</div></div>
+        <div class="preview-meal-price">$2.49</div>
+      </div>
+      <div class="preview-meal">
+        <div class="preview-meal-emoji">☀️</div>
+        <div><div class="preview-meal-name">Meijer Caesar Salad Kit</div><div class="preview-meal-cal">290 cal · 22g protein</div></div>
+        <div class="preview-meal-price">$3.99</div>
+      </div>
+      <div class="preview-meal">
+        <div class="preview-meal-emoji">🌙</div>
+        <div><div class="preview-meal-name">Healthy Choice Power Bowl</div><div class="preview-meal-cal">380 cal · 27g protein</div></div>
+        <div class="preview-meal-price">$4.99</div>
+      </div>
+      <div class="preview-meal">
+        <div class="preview-meal-emoji">🍎</div>
+        <div><div class="preview-meal-name">Oikos Pro + String Cheese</div><div class="preview-meal-cal">210 cal · 27g protein</div></div>
+        <div class="preview-meal-price">$2.48</div>
+      </div>
+    </div>
+    <div class="preview-stats">
+      <div class="preview-total">
+        <div class="preview-total-val">1,040 cal</div>
+        <div class="preview-total-label">Total · 106g protein</div>
+      </div>
+      <div>
+        <div class="preview-stat-label">Protein</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:88%;background:#3b82f6"></div></div>
+      </div>
+      <div>
+        <div class="preview-stat-label">Carbs</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:72%;background:#eab308"></div></div>
+      </div>
+      <div>
+        <div class="preview-stat-label">Fat</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:55%;background:#a855f7"></div></div>
+      </div>
+      <div style="font-size:13px;font-weight:700;color:var(--green)">~$13.95 / day</div>
+    </div>
+  </div>
+</section>
+
+<!-- BOTTOM CTA -->
+<section class="cta-section">
+  <h2>Ready to stop<br>guessing what to eat?</h2>
+  <p>Sign in with Google and build your first meal plan in under 2 minutes. Free, no app store required.</p>
+  <button class="btn-signin" onclick="handleSignIn()" style="margin:0 auto">
+    <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/><path fill="none" d="M0 0h48v48H0z"/></svg>
+    Continue with Google
+  </button>
+</section>
+
+<footer>
+  <div class="footer-logo">No<span>Cook</span></div>
+  <p>Built for Meijer shoppers · Free forever</p>
+</footer>
+
+<script>
+const FIREBASE_CONFIG = {
+  apiKey:            "AIzaSyAk8BVnv8X9EPq2xeKJ2EEupA-_NeNarcE",
+  authDomain:        "no-cook.firebaseapp.com",
+  projectId:         "no-cook",
+  storageBucket:     "no-cook.firebasestorage.app",
+  messagingSenderId: "1041113021456",
+  appId:             "1:1041113021456:web:a55a007c6ef3a9b2755e95"
+};
+
+let fbAuth = null;
+
+window.addEventListener('load', () => {
+  firebase.initializeApp(FIREBASE_CONFIG);
+  fbAuth = firebase.auth();
+  fbAuth.onAuthStateChanged(user => {
+    document.getElementById('auth-checking').classList.add('hidden');
+    if (user) window.location.replace('app.html');
+  });
+});
+
+function handleSignIn() {
+  if (!fbAuth) return;
+  const provider = new firebase.auth.GoogleAuthProvider();
+  fbAuth.signInWithPopup(provider)
+    .then(() => window.location.replace('app.html'))
+    .catch(err => {
+      if (err.code !== 'auth/popup-closed-by-user') alert('Sign-in failed: ' + err.message);
+    });
+}
+</script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+</body>
+</html>

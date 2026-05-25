@@ -1,0 +1,14 @@
+{
+  "name": "NoCook — Meijer Meal Planner",
+  "short_name": "NoCook",
+  "description": "No-cook grocery meal planner built around Meijer. Hit your calorie goal without ever touching a stove.",
+  "start_url": "./app.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "categories": ["food", "health", "fitness"],
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
