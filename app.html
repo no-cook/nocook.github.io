@@ -181,7 +181,8 @@
   .quiz-progress-fill { background:var(--green); height:100%; border-radius:99px; transition:width 0.35s ease; }
   .quiz-skip { background:none; border:none; color:var(--muted); font-size:13px; font-weight:600; cursor:pointer; white-space:nowrap; }
   .quiz-skip:hover { color:var(--text); }
-  .quiz-body { flex:1; overflow-y:auto; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:32px 24px; }
+  .quiz-body { flex:1; overflow-y:auto; display:flex; flex-direction:column; align-items:center; padding:32px 24px; }
+  .quiz-body-centered { justify-content:center; }
   .quiz-step { width:100%; max-width:500px; }
   .quiz-step h2 { font-size:clamp(22px,4vw,30px); font-weight:900; margin-bottom:8px; letter-spacing:-0.5px; }
   .quiz-step .quiz-sub { font-size:15px; color:var(--muted); margin-bottom:24px; line-height:1.5; }
@@ -201,6 +202,10 @@
   .quiz-result-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:16px; text-align:center; }
   .quiz-result-val { font-size:28px; font-weight:900; }
   .quiz-result-label { font-size:11px; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:0.5px; margin-top:3px; }
+  /* VIBE PLAN PICKER */
+  .vibe-plan { align-items:flex-start !important; padding:16px 18px !important; }
+  .vibe-examples { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
+  .vibe-ex { font-size:12px; background:rgba(255,255,255,0.07); border-radius:6px; padding:4px 9px; color:var(--muted); }
 
   /* AUTH / SYNC */
   .auth-area { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
@@ -387,7 +392,7 @@
     <div class="quiz-progress-wrap"><div class="quiz-progress-fill" id="quiz-progress" style="width:0%"></div></div>
     <button class="quiz-skip" onclick="skipQuiz()">Skip</button>
   </div>
-  <div class="quiz-body" id="quiz-body"></div>
+  <div class="quiz-body quiz-body-centered" id="quiz-body"></div>
   <div class="quiz-footer" id="quiz-footer"></div>
 </div>
 
@@ -1151,6 +1156,450 @@ const FOODS = [
   { id:85, name:"Meijer Brand Apple Slices Cup + Almond Butter Packet", brand:"Meijer", emoji:"🍎", meal:"snack",
     cal:180, pro:4,  carb:24, fat:9,  price:2.29, prep:"Open and dip",
     aisle:"Produce / Snack Section + Nut Butter Aisle", tags:["no-cook","fresh","vegan","portable","value"] },
+
+  // ─── BREAKFAST (expanded) ────────────────────────────────────────────────────
+  { id:101, name:"Two Good Strawberry Greek Yogurt (5.3oz)", brand:"Two Good", emoji:"🍓", meal:"breakfast",
+    cal:80,  pro:12, carb:5,  fat:0,  price:1.69, prep:"Ready to eat",
+    aisle:"Dairy Aisle — Yogurt Section", tags:["no-cook","high-protein","refrigerated","low-carb"] },
+
+  { id:102, name:"Fage 0% Plain Greek Yogurt (7oz)", brand:"Fage", emoji:"🥛", meal:"breakfast",
+    cal:100, pro:18, carb:7,  fat:0,  price:1.79, prep:"Ready to eat",
+    aisle:"Dairy Aisle — Yogurt Section", tags:["no-cook","high-protein","refrigerated","low-carb"] },
+
+  { id:103, name:"Muscle Milk Pro Series Chocolate Shake (14oz)", brand:"Muscle Milk", emoji:"🍫", meal:"breakfast",
+    cal:280, pro:40, carb:9,  fat:7,  price:3.99, prep:"Ready to drink",
+    aisle:"Health & Nutrition Aisle", tags:["no-cook","high-protein","portable","low-carb"] },
+
+  { id:104, name:"Ensure High Protein Chocolate (8oz)", brand:"Ensure", emoji:"🥤", meal:"breakfast",
+    cal:160, pro:16, carb:18, fat:4,  price:2.49, prep:"Ready to drink",
+    aisle:"Health & Nutrition Aisle", tags:["no-cook","high-protein","portable"] },
+
+  { id:105, name:"Good Culture Cottage Cheese Everything Bagel (5.3oz)", brand:"Good Culture", emoji:"🫙", meal:"breakfast",
+    cal:160, pro:19, carb:7,  fat:5,  price:2.79, prep:"Ready to eat",
+    aisle:"Dairy Aisle — Cottage Cheese", tags:["no-cook","high-protein","refrigerated","low-carb","savory"] },
+
+  { id:106, name:"Oikos Triple Zero Vanilla Greek Yogurt (5.3oz)", brand:"Oikos", emoji:"🍶", meal:"breakfast",
+    cal:120, pro:15, carb:13, fat:0,  price:1.79, prep:"Ready to eat",
+    aisle:"Dairy Aisle — Yogurt Section", tags:["no-cook","high-protein","refrigerated","low-carb"] },
+
+  { id:107, name:"ONE Protein Bar Birthday Cake", brand:"ONE", emoji:"🎂", meal:"breakfast",
+    cal:220, pro:20, carb:23, fat:7,  price:2.49, prep:"Ready to eat",
+    aisle:"Granola Bar / Snack Bar Aisle", tags:["no-cook","high-protein","portable","sweet"] },
+
+  { id:108, name:"thinkThin High Protein Bar Chocolate Fudge", brand:"thinkThin", emoji:"🍫", meal:"breakfast",
+    cal:230, pro:20, carb:26, fat:8,  price:2.29, prep:"Ready to eat",
+    aisle:"Granola Bar / Snack Bar Aisle", tags:["no-cook","high-protein","portable","sweet"] },
+
+  { id:109, name:"Jimmy Dean Egg & Cheese Breakfast Sandwich (frozen)", brand:"Jimmy Dean", emoji:"🧇", meal:"breakfast",
+    cal:380, pro:17, carb:34, fat:20, price:2.99, prep:"Microwave 60–75 sec",
+    aisle:"Frozen Foods — Breakfast", tags:["microwave","high-protein","warm","savory"] },
+
+  { id:110, name:"Meijer Brand Frozen Bean & Cheese Breakfast Burrito", brand:"Meijer", emoji:"🌯", meal:"breakfast",
+    cal:280, pro:10, carb:40, fat:9,  price:1.99, prep:"Microwave 90 sec",
+    aisle:"Frozen Foods — Breakfast", tags:["microwave","warm","value","vegetarian"] },
+
+  { id:111, name:"Lifeway Plain Kefir (1 cup)", brand:"Lifeway", emoji:"🥛", meal:"breakfast",
+    cal:160, pro:11, carb:13, fat:6,  price:1.49, prep:"Shake and pour",
+    aisle:"Dairy Aisle — Kefir / Dairy Drinks", tags:["no-cook","high-protein","refrigerated"] },
+
+  { id:112, name:"Ratio Keto Friendly Vanilla Dairy Snack (5.3oz)", brand:"Ratio", emoji:"🍶", meal:"breakfast",
+    cal:90,  pro:15, carb:2,  fat:3,  price:2.29, prep:"Ready to eat",
+    aisle:"Dairy Aisle — Yogurt Section", tags:["no-cook","high-protein","refrigerated","low-carb","keto"] },
+
+  { id:113, name:"Bob Evans Refrigerated Microwavable Scrambled Eggs (2 svgs)", brand:"Bob Evans", emoji:"🍳", meal:"breakfast",
+    cal:140, pro:13, carb:1,  fat:9,  price:2.99, prep:"Microwave 60 sec",
+    aisle:"Refrigerated — Eggs / Prepared Foods", tags:["microwave","high-protein","warm","low-carb"] },
+
+  { id:114, name:"Meijer Brand Protein Granola (1 cup) + Almond Milk", brand:"Meijer", emoji:"🥣", meal:"breakfast",
+    cal:310, pro:10, carb:44, fat:9,  price:1.79, prep:"Pour and eat",
+    aisle:"Cereal Aisle + Dairy Aisle", tags:["no-cook","vegetarian","vegan","value"] },
+
+  { id:115, name:"Noosa Whole Milk Yoghurt Honey (4.5oz)", brand:"Noosa", emoji:"🍯", meal:"breakfast",
+    cal:180, pro:8,  carb:26, fat:5,  price:1.99, prep:"Ready to eat",
+    aisle:"Dairy Aisle — Yogurt Section", tags:["no-cook","refrigerated","sweet"] },
+
+  { id:116, name:"Quaker Protein Instant Oatmeal Cup — Banana Walnut", brand:"Quaker", emoji:"🍌", meal:"breakfast",
+    cal:290, pro:11, carb:46, fat:7,  price:2.49, prep:"Add hot tap water, wait 2 min",
+    aisle:"Cereal & Oatmeal Aisle", tags:["warm","high-protein","sweet","vegetarian"] },
+
+  { id:117, name:"Yoplait Light Strawberry Yogurt (6oz)", brand:"Yoplait", emoji:"🍓", meal:"breakfast",
+    cal:90,  pro:5,  carb:16, fat:0,  price:0.89, prep:"Ready to eat",
+    aisle:"Dairy Aisle — Yogurt Section", tags:["no-cook","refrigerated","sweet","low-cal","value"] },
+
+  { id:118, name:"Meijer Brand Hard-Boiled Egg & Cheese Snack Pack", brand:"Meijer", emoji:"🥚", meal:"breakfast",
+    cal:180, pro:16, carb:2,  fat:12, price:2.49, prep:"Ready to eat",
+    aisle:"Dairy Aisle — Refrigerated Snacks", tags:["no-cook","high-protein","refrigerated","low-carb","keto","value"] },
+
+  { id:119, name:"ALDI/Meijer Protein Coffee (Mocha, 11oz can)", brand:"Meijer", emoji:"☕", meal:"breakfast",
+    cal:130, pro:20, carb:7,  fat:3,  price:2.29, prep:"Ready to drink, shake first",
+    aisle:"Health & Nutrition Aisle — Canned Coffee", tags:["no-cook","high-protein","portable","low-carb"] },
+
+  { id:120, name:"Meijer Brand Overnight Oats Cup — Peach & Cream", brand:"Meijer", emoji:"🍑", meal:"breakfast",
+    cal:280, pro:9,  carb:47, fat:6,  price:2.49, prep:"Eat as-is or add cold milk",
+    aisle:"Cereal & Breakfast Aisle", tags:["no-cook","vegetarian","sweet","value"] },
+
+  // ─── LUNCH (expanded) ────────────────────────────────────────────────────────
+  { id:121, name:"Chicken of the Sea Salmon Pouch Lemon Herb (2.5oz)", brand:"Chicken of the Sea", emoji:"🐟", meal:"lunch",
+    cal:90,  pro:17, carb:1,  fat:2,  price:2.49, prep:"Tear open and eat",
+    aisle:"Canned Goods — Tuna/Salmon Section", tags:["no-cook","high-protein","portable","low-carb","keto"] },
+
+  { id:122, name:"Meijer Brand Deli Turkey & Swiss Sandwich (pre-made)", brand:"Meijer Deli", emoji:"🥪", meal:"lunch",
+    cal:390, pro:27, carb:36, fat:13, price:5.49, prep:"Ready to eat",
+    aisle:"Deli Counter", tags:["no-cook","high-protein","fresh","portable"] },
+
+  { id:123, name:"Amy's Organic Chunky Vegetable Soup (can)", brand:"Amy's", emoji:"🍲", meal:"lunch",
+    cal:130, pro:4,  carb:26, fat:2,  price:3.29, prep:"Microwave in bowl 2 min",
+    aisle:"Soup Aisle", tags:["microwave","vegetarian","vegan","warm","low-cal"] },
+
+  { id:124, name:"Taylor Farms Southwestern Chopped Salad Kit", brand:"Taylor Farms", emoji:"🥗", meal:"lunch",
+    cal:230, pro:7,  carb:22, fat:13, price:4.49, prep:"Toss and eat",
+    aisle:"Produce — Salad Kits", tags:["no-cook","vegetarian","vegan","fresh","crunchy"] },
+
+  { id:125, name:"Green Giant Harvest Protein Bowl Chicken & Roasted Veggies (frozen)", brand:"Green Giant", emoji:"🥦", meal:"lunch",
+    cal:300, pro:20, carb:34, fat:9,  price:4.49, prep:"Microwave 4 min",
+    aisle:"Frozen Foods — Protein Bowls", tags:["microwave","high-protein","warm"] },
+
+  { id:126, name:"Progresso Light Chicken Noodle Soup (can)", brand:"Progresso", emoji:"🍜", meal:"lunch",
+    cal:60,  pro:7,  carb:7,  fat:1,  price:2.19, prep:"Microwave in bowl 90 sec",
+    aisle:"Soup Aisle", tags:["microwave","warm","low-cal"] },
+
+  { id:127, name:"Meijer Brand Mediterranean Veggie Wrap (fresh deli)", brand:"Meijer Deli", emoji:"🌯", meal:"lunch",
+    cal:370, pro:12, carb:48, fat:14, price:4.99, prep:"Ready to eat",
+    aisle:"Deli Counter", tags:["no-cook","vegetarian","fresh","portable"] },
+
+  { id:128, name:"Meijer Deli Rotisserie Chicken Breast (cold, ready-to-eat)", brand:"Meijer Deli", emoji:"🍗", meal:"lunch",
+    cal:260, pro:43, carb:0,  fat:9,  price:5.99, prep:"Ready to eat cold",
+    aisle:"Deli Counter — Hot Foods / Rotisserie", tags:["no-cook","high-protein","low-carb","keto","fresh"] },
+
+  { id:129, name:"Healthy Choice Café Steamers Chicken Marsala (frozen)", brand:"Healthy Choice", emoji:"🍝", meal:"lunch",
+    cal:220, pro:20, carb:28, fat:3,  price:4.49, prep:"Microwave 4 min",
+    aisle:"Frozen Foods — Frozen Meals", tags:["microwave","high-protein","warm","low-cal"] },
+
+  { id:130, name:"Meijer Brand Fresh Caprese Cup (mozzarella, tomato, basil)", brand:"Meijer", emoji:"🍅", meal:"lunch",
+    cal:180, pro:11, carb:6,  fat:12, price:3.49, prep:"Open and eat",
+    aisle:"Produce / Deli — Refrigerated Snack Section", tags:["no-cook","vegetarian","fresh","refrigerated"] },
+
+  { id:131, name:"StarKist Salmon Creations Lemon Pepper Pouch (2.6oz)", brand:"StarKist", emoji:"🐟", meal:"lunch",
+    cal:80,  pro:16, carb:1,  fat:1,  price:2.99, prep:"Tear open and eat",
+    aisle:"Canned Goods — Tuna/Salmon Section", tags:["no-cook","high-protein","portable","low-carb","keto"] },
+
+  { id:132, name:"Bumble Bee Tuna Salad + Crackers On-The-Go Kit", brand:"Bumble Bee", emoji:"🐟", meal:"lunch",
+    cal:210, pro:9,  carb:24, fat:8,  price:2.49, prep:"Open and eat",
+    aisle:"Canned Goods — Tuna Section", tags:["no-cook","portable","fresh"] },
+
+  { id:133, name:"Oscar Mayer Lunchable Turkey & Cheddar with Crackers", brand:"Oscar Mayer", emoji:"🧀", meal:"lunch",
+    cal:320, pro:15, carb:28, fat:16, price:3.49, prep:"Ready to eat",
+    aisle:"Refrigerated Deli / Lunchable Section", tags:["no-cook","portable","refrigerated","fresh"] },
+
+  { id:134, name:"El Monterey Bean & Cheese Burrito (frozen, microwave)", brand:"El Monterey", emoji:"🌯", meal:"lunch",
+    cal:300, pro:9,  carb:47, fat:9,  price:1.49, prep:"Microwave 90 sec",
+    aisle:"Frozen Foods — Burritos", tags:["microwave","vegetarian","warm","value"] },
+
+  { id:135, name:"Seeds of Change Brown Rice + Black Beans Pouch (microwave)", brand:"Seeds of Change", emoji:"🌾", meal:"lunch",
+    cal:280, pro:10, carb:52, fat:4,  price:2.99, prep:"Microwave 90 sec",
+    aisle:"Rice / Grains Aisle", tags:["microwave","vegetarian","vegan","warm"] },
+
+  { id:136, name:"Panera Bread Chicken Noodle Soup (refrigerated cup)", brand:"Panera", emoji:"🍜", meal:"lunch",
+    cal:170, pro:12, carb:20, fat:4,  price:3.99, prep:"Microwave 90 sec",
+    aisle:"Refrigerated Soups Section", tags:["microwave","warm","high-protein"] },
+
+  { id:137, name:"P3 Protein Pack Chicken, Sunflower Seeds & Almonds", brand:"Oscar Mayer", emoji:"🐔", meal:"lunch",
+    cal:200, pro:17, carb:6,  fat:12, price:2.99, prep:"Ready to eat",
+    aisle:"Refrigerated Deli Aisle", tags:["no-cook","high-protein","low-carb","keto","portable","refrigerated"] },
+
+  { id:138, name:"Hormel Compleats Chicken & Rice (shelf-stable, microwave)", brand:"Hormel", emoji:"🍚", meal:"lunch",
+    cal:240, pro:15, carb:36, fat:4,  price:2.99, prep:"Microwave 60 sec",
+    aisle:"Canned Goods / Shelf-Stable Meals Aisle", tags:["microwave","high-protein","warm","value"] },
+
+  { id:139, name:"Gardein Plant-Based Meatball Italian-Style Bowl (frozen)", brand:"Gardein", emoji:"🍝", meal:"lunch",
+    cal:280, pro:16, carb:38, fat:7,  price:4.99, prep:"Microwave 4 min",
+    aisle:"Frozen Foods — Meatless Section", tags:["microwave","vegetarian","vegan","warm","high-protein"] },
+
+  { id:140, name:"Meijer Brand Deli Egg Salad + Whole Grain Crackers", brand:"Meijer", emoji:"🥚", meal:"lunch",
+    cal:270, pro:10, carb:24, fat:15, price:2.99, prep:"Open and eat",
+    aisle:"Deli Section + Cracker Aisle", tags:["no-cook","vegetarian","fresh","value"] },
+
+  { id:141, name:"Lean Cuisine Pomegranate Chicken Bowl (frozen)", brand:"Lean Cuisine", emoji:"🍗", meal:"lunch",
+    cal:260, pro:19, carb:38, fat:4,  price:3.99, prep:"Microwave 4 min",
+    aisle:"Frozen Foods — Frozen Meals", tags:["microwave","high-protein","warm","low-cal"] },
+
+  { id:142, name:"Siggi's Skyr + Meijer Walnuts + Honey Yogurt Bowl", brand:"Siggi's / Meijer", emoji:"🍯", meal:"lunch",
+    cal:280, pro:20, carb:22, fat:10, price:3.49, prep:"Open and mix",
+    aisle:"Dairy Aisle + Nuts Aisle", tags:["no-cook","high-protein","refrigerated","fresh","vegetarian"] },
+
+  { id:143, name:"Wholly Guacamole Singles + Meijer Turkey Slices + Crackers", brand:"Wholly / Meijer", emoji:"🥑", meal:"lunch",
+    cal:290, pro:16, carb:22, fat:15, price:3.99, prep:"Open and eat",
+    aisle:"Refrigerated Dips + Deli + Cracker Aisle", tags:["no-cook","fresh","portable","refrigerated"] },
+
+  { id:144, name:"Healthy Choice Simply Steamers Beef & Peppers (frozen)", brand:"Healthy Choice", emoji:"🥩", meal:"lunch",
+    cal:200, pro:16, carb:26, fat:4,  price:3.49, prep:"Microwave 4–5 min",
+    aisle:"Frozen Foods — Frozen Meals", tags:["microwave","high-protein","warm","low-cal"] },
+
+  { id:145, name:"Meijer Brand Quinoa & Roasted Veggie Salad (fresh deli)", brand:"Meijer Deli", emoji:"🥗", meal:"lunch",
+    cal:310, pro:9,  carb:44, fat:10, price:4.99, prep:"Ready to eat",
+    aisle:"Deli Section — Fresh Salads", tags:["no-cook","vegetarian","vegan","fresh","value"] },
+
+  { id:146, name:"Pacific Foods Organic Tomato Basil Soup (can)", brand:"Pacific Foods", emoji:"🍅", meal:"lunch",
+    cal:170, pro:4,  carb:34, fat:3,  price:3.49, prep:"Microwave in bowl 2 min",
+    aisle:"Soup Aisle", tags:["microwave","vegetarian","vegan","warm"] },
+
+  { id:147, name:"Meijer Brand Asian Noodle Salad Cup (refrigerated)", brand:"Meijer", emoji:"🍜", meal:"lunch",
+    cal:340, pro:11, carb:52, fat:10, price:3.99, prep:"Ready to eat",
+    aisle:"Produce / Deli — Refrigerated Salads", tags:["no-cook","vegetarian","fresh","value"] },
+
+  { id:148, name:"Hormel Natural Choice Uncured Ham Snack Pack + Swiss", brand:"Hormel / Meijer", emoji:"🥩", meal:"lunch",
+    cal:250, pro:22, carb:4,  fat:16, price:3.29, prep:"Ready to eat",
+    aisle:"Refrigerated Deli Aisle", tags:["no-cook","high-protein","low-carb","keto","portable","refrigerated"] },
+
+  { id:149, name:"Meijer Brand Ready Rice (Brown) + StarKist Tuna Packet", brand:"Meijer / StarKist", emoji:"🍚", meal:"lunch",
+    cal:330, pro:24, carb:44, fat:4,  price:2.99, prep:"Microwave rice 90 sec, mix with tuna",
+    aisle:"Rice Aisle + Canned Goods", tags:["microwave","high-protein","low-fat","warm","value"] },
+
+  { id:150, name:"Soup At Hand Chicken & Stars (on-the-go cup)", brand:"Campbell's", emoji:"⭐", meal:"lunch",
+    cal:80,  pro:5,  carb:12, fat:1,  price:1.79, prep:"Microwave 90 sec, drink from cup",
+    aisle:"Soup Aisle — Portable Cups", tags:["microwave","warm","low-cal","portable"] },
+
+  // ─── DINNER (expanded) ───────────────────────────────────────────────────────
+  { id:151, name:"Healthy Choice Café Steamers Sweet & Spicy Asian Noodles (frozen)", brand:"Healthy Choice", emoji:"🍜", meal:"dinner",
+    cal:290, pro:12, carb:50, fat:5,  price:3.99, prep:"Microwave 4 min",
+    aisle:"Frozen Foods — Frozen Meals", tags:["microwave","warm","vegetarian"] },
+
+  { id:152, name:"Marie Callender's Chicken Pot Pie Bowl (microwave)", brand:"Marie Callender's", emoji:"🥧", meal:"dinner",
+    cal:430, pro:14, carb:52, fat:19, price:4.49, prep:"Microwave 5 min",
+    aisle:"Frozen Foods — Frozen Meals", tags:["microwave","warm","hearty","filling"] },
+
+  { id:153, name:"Lean Cuisine Herb Roasted Chicken (frozen)", brand:"Lean Cuisine", emoji:"🍗", meal:"dinner",
+    cal:200, pro:18, carb:22, fat:4,  price:3.49, prep:"Microwave 4 min",
+    aisle:"Frozen Foods — Frozen Meals", tags:["microwave","high-protein","warm","low-cal"] },
+
+  { id:154, name:"Evol Truffle Parmesan Mac & Cheese Bowl (frozen)", brand:"Evol", emoji:"🧀", meal:"dinner",
+    cal:350, pro:13, carb:46, fat:13, price:4.49, prep:"Microwave 4 min",
+    aisle:"Frozen Foods — Frozen Meals", tags:["microwave","vegetarian","warm","rich"] },
+
+  { id:155, name:"Meijer Brand Turkey Chili with Beans (can, 15oz)", brand:"Meijer", emoji:"🫘", meal:"dinner",
+    cal:260, pro:20, carb:36, fat:5,  price:2.49, prep:"Microwave 2 min",
+    aisle:"Canned Goods — Chili", tags:["microwave","high-protein","warm","value"] },
+
+  { id:156, name:"Campbell's Chunky Beef & Country Vegetable Soup (can)", brand:"Campbell's", emoji:"🥣", meal:"dinner",
+    cal:190, pro:12, carb:28, fat:4,  price:2.49, prep:"Microwave in bowl 2 min",
+    aisle:"Soup Aisle", tags:["microwave","high-protein","warm"] },
+
+  { id:157, name:"Progresso Loaded Potato Chowder with Bacon (can)", brand:"Progresso", emoji:"🥔", meal:"dinner",
+    cal:210, pro:8,  carb:30, fat:7,  price:2.79, prep:"Microwave in bowl 2 min",
+    aisle:"Soup Aisle", tags:["microwave","warm","rich","hearty"] },
+
+  { id:158, name:"Amy's Indian Palak Paneer Bowl (frozen)", brand:"Amy's", emoji:"🍛", meal:"dinner",
+    cal:290, pro:10, carb:36, fat:12, price:5.49, prep:"Microwave 4 min",
+    aisle:"Frozen Foods — Meatless / International", tags:["microwave","vegetarian","warm","spicy"] },
+
+  { id:159, name:"Sukhi's Chicken Tikka Masala + Basmati Rice (refrigerated)", brand:"Sukhi's", emoji:"🍛", meal:"dinner",
+    cal:360, pro:22, carb:46, fat:9,  price:6.49, prep:"Microwave 2 min",
+    aisle:"Refrigerated — International / Prepared Foods", tags:["microwave","high-protein","warm","spicy"] },
+
+  { id:160, name:"Banquet Mega Bowls Honey Bourbon Chicken (frozen)", brand:"Banquet", emoji:"🍗", meal:"dinner",
+    cal:470, pro:22, carb:70, fat:12, price:3.99, prep:"Microwave 5–6 min",
+    aisle:"Frozen Foods — Frozen Meals", tags:["microwave","warm","high-protein","value","sweet"] },
+
+  { id:161, name:"Birds Eye Protein Bowl Pasta & Chicken Primavera (frozen)", brand:"Birds Eye", emoji:"🍝", meal:"dinner",
+    cal:310, pro:22, carb:38, fat:7,  price:4.49, prep:"Microwave 4 min",
+    aisle:"Frozen Foods — Protein Bowls", tags:["microwave","high-protein","warm"] },
+
+  { id:162, name:"Meijer Brand Frozen Mac & Cheese Bowl (microwave cup)", brand:"Meijer", emoji:"🧀", meal:"dinner",
+    cal:340, pro:11, carb:50, fat:11, price:2.49, prep:"Microwave 3 min",
+    aisle:"Frozen Foods — Frozen Meals", tags:["microwave","vegetarian","warm","value"] },
+
+  { id:163, name:"Hormel Compleats Turkey & Mashed Potatoes (microwave)", brand:"Hormel", emoji:"🦃", meal:"dinner",
+    cal:250, pro:18, carb:30, fat:6,  price:2.99, prep:"Microwave 60 sec",
+    aisle:"Canned Goods / Shelf-Stable Meals Aisle", tags:["microwave","high-protein","warm","value"] },
+
+  { id:164, name:"Good Food Made Simple Turkey & Veggie Burrito (frozen)", brand:"Good Food Made Simple", emoji:"🌯", meal:"dinner",
+    cal:310, pro:16, carb:44, fat:8,  price:3.99, prep:"Microwave 2–3 min",
+    aisle:"Frozen Foods — Frozen Burritos", tags:["microwave","high-protein","warm"] },
+
+  { id:165, name:"Amy's Organic Black Bean Soup (can)", brand:"Amy's", emoji:"🫘", meal:"dinner",
+    cal:150, pro:8,  carb:27, fat:2,  price:3.49, prep:"Microwave 2 min",
+    aisle:"Soup Aisle", tags:["microwave","vegetarian","vegan","warm","low-cal"] },
+
+  { id:166, name:"Smart Ones Creamy Rigatoni with Broccoli & Chicken (frozen)", brand:"Smart Ones", emoji:"🍝", meal:"dinner",
+    cal:260, pro:14, carb:38, fat:5,  price:2.99, prep:"Microwave 3–4 min",
+    aisle:"Frozen Foods — Frozen Meals", tags:["microwave","high-protein","warm","low-cal"] },
+
+  { id:167, name:"Healthy Choice Simply Steamers Chicken Fajita Bowl (frozen)", brand:"Healthy Choice", emoji:"🌶️", meal:"dinner",
+    cal:230, pro:20, carb:26, fat:4,  price:3.49, prep:"Microwave 4 min",
+    aisle:"Frozen Foods — Frozen Meals", tags:["microwave","high-protein","warm","low-cal","spicy"] },
+
+  { id:168, name:"Progresso New England Clam Chowder (can)", brand:"Progresso", emoji:"🦪", meal:"dinner",
+    cal:210, pro:11, carb:22, fat:9,  price:2.79, prep:"Microwave in bowl 2 min",
+    aisle:"Soup Aisle", tags:["microwave","warm","rich","hearty"] },
+
+  { id:169, name:"Meijer Brand Frozen Shrimp Stir Fry + Brown Rice (microwave bag)", brand:"Meijer", emoji:"🍤", meal:"dinner",
+    cal:290, pro:18, carb:38, fat:7,  price:4.99, prep:"Microwave 5 min",
+    aisle:"Frozen Foods — Seafood Meals", tags:["microwave","high-protein","warm","value"] },
+
+  { id:170, name:"Evol Cilantro Lime Chicken Bowl (frozen)", brand:"Evol", emoji:"🍚", meal:"dinner",
+    cal:330, pro:19, carb:46, fat:8,  price:4.49, prep:"Microwave 4 min",
+    aisle:"Frozen Foods — Frozen Meals", tags:["microwave","high-protein","warm"] },
+
+  { id:171, name:"Banquet Chicken & Broccoli Pot Pie (microwave, individual)", brand:"Banquet", emoji:"🥧", meal:"dinner",
+    cal:380, pro:11, carb:42, fat:19, price:1.99, prep:"Microwave 4 min",
+    aisle:"Frozen Foods — Frozen Meals", tags:["microwave","warm","value","hearty"] },
+
+  { id:172, name:"Kahiki General Tso's Chicken with Fried Rice (frozen)", brand:"Kahiki", emoji:"🥡", meal:"dinner",
+    cal:480, pro:18, carb:68, fat:14, price:4.49, prep:"Microwave 4 min",
+    aisle:"Frozen Foods — Asian Foods", tags:["microwave","warm","sweet"] },
+
+  { id:173, name:"Lean Cuisine Chicken Ranch Club Flatbread Pizza (frozen)", brand:"Lean Cuisine", emoji:"🍕", meal:"dinner",
+    cal:300, pro:18, carb:40, fat:7,  price:3.99, prep:"Microwave 3 min",
+    aisle:"Frozen Foods — Frozen Meals", tags:["microwave","high-protein","warm"] },
+
+  { id:174, name:"Hormel Compleats Beef Pot Roast & Potatoes (microwave)", brand:"Hormel", emoji:"🥩", meal:"dinner",
+    cal:270, pro:20, carb:28, fat:8,  price:2.99, prep:"Microwave 60 sec",
+    aisle:"Canned Goods / Shelf-Stable Meals Aisle", tags:["microwave","high-protein","warm","value"] },
+
+  { id:175, name:"Meijer Brand Frozen Black Bean & Corn Burrito Bowl (microwave)", brand:"Meijer", emoji:"🌽", meal:"dinner",
+    cal:320, pro:11, carb:56, fat:7,  price:2.99, prep:"Microwave 4 min",
+    aisle:"Frozen Foods — Frozen Meals", tags:["microwave","vegetarian","vegan","warm","value"] },
+
+  { id:176, name:"Campbell's Well Yes! Italian Wedding Soup (can)", brand:"Campbell's", emoji:"💍", meal:"dinner",
+    cal:120, pro:8,  carb:16, fat:3,  price:2.49, prep:"Microwave 2 min",
+    aisle:"Soup Aisle", tags:["microwave","warm","low-cal"] },
+
+  { id:177, name:"Meijer Brand Canned Salmon + Meijer Ready Rice (microwave)", brand:"Meijer", emoji:"🐟", meal:"dinner",
+    cal:330, pro:30, carb:38, fat:7,  price:3.99, prep:"Microwave rice 90 sec, mix salmon",
+    aisle:"Canned Goods + Rice Aisle", tags:["microwave","high-protein","low-fat","warm","value"] },
+
+  { id:178, name:"Meijer Brand Frozen Salmon Filet with Herb Butter (microwave steam bag)", brand:"Meijer", emoji:"🐟", meal:"dinner",
+    cal:310, pro:28, carb:4,  fat:20, price:5.99, prep:"Microwave 4 min in bag",
+    aisle:"Frozen Foods — Seafood", tags:["microwave","high-protein","warm","low-carb","keto","value"] },
+
+  { id:179, name:"Seeds of Change Quinoa & Brown Rice + Amy's Lentil Soup (combo)", brand:"Seeds of Change / Amy's", emoji:"🌿", meal:"dinner",
+    cal:310, pro:16, carb:56, fat:4,  price:4.99, prep:"Microwave rice 90 sec + soup 2 min",
+    aisle:"Rice Aisle + Soup Aisle", tags:["microwave","vegetarian","vegan","warm","high-fiber"] },
+
+  { id:180, name:"Rao's Marinara Sauce (½ cup) + Meijer Canned Lentils (1 cup)", brand:"Rao's / Meijer", emoji:"🍅", meal:"dinner",
+    cal:300, pro:14, carb:48, fat:6,  price:3.99, prep:"Mix and microwave 2 min",
+    aisle:"Pasta Sauce Aisle + Canned Beans Aisle", tags:["microwave","vegetarian","vegan","warm","high-fiber"] },
+
+  // ─── SNACKS (expanded) ───────────────────────────────────────────────────────
+  { id:181, name:"Orange (medium)", brand:"Produce", emoji:"🍊", meal:"snack",
+    cal:62,  pro:1,  carb:15, fat:0,  price:0.59, prep:"Peel and eat",
+    aisle:"Produce Section", tags:["no-cook","fresh","vegan","low-cal","portable"] },
+
+  { id:182, name:"Babybel Original Mini Cheese Round (1 piece)", brand:"Babybel", emoji:"🧀", meal:"snack",
+    cal:70,  pro:5,  carb:0,  fat:6,  price:0.99, prep:"Peel wax and eat",
+    aisle:"Dairy Aisle — Cheese Snacks", tags:["no-cook","high-protein","low-carb","keto","portable","refrigerated"] },
+
+  { id:183, name:"Meijer Brand Pepperoni Snack Pack (1oz)", brand:"Meijer", emoji:"🍕", meal:"snack",
+    cal:130, pro:6,  carb:1,  fat:12, price:0.99, prep:"Open and eat",
+    aisle:"Refrigerated Deli — Snack Section", tags:["no-cook","low-carb","keto","portable","refrigerated","value"] },
+
+  { id:184, name:"Sargento Reduced-Fat Colby Jack Snack Sticks (2 sticks)", brand:"Sargento", emoji:"🧀", meal:"snack",
+    cal:100, pro:9,  carb:0,  fat:7,  price:1.49, prep:"Ready to eat",
+    aisle:"Dairy Aisle — Cheese Snacks", tags:["no-cook","high-protein","low-carb","keto","portable","refrigerated"] },
+
+  { id:185, name:"Meijer Brand Roasted Sunflower Seeds (1oz)", brand:"Meijer", emoji:"🌻", meal:"snack",
+    cal:160, pro:5,  carb:6,  fat:14, price:0.49, prep:"Open and eat",
+    aisle:"Nuts & Snacks Aisle", tags:["no-cook","vegan","portable","low-carb","value"] },
+
+  { id:186, name:"Meijer Brand Pretzel Nuggets (1oz)", brand:"Meijer", emoji:"🥨", meal:"snack",
+    cal:110, pro:3,  carb:23, fat:1,  price:0.49, prep:"Open and eat",
+    aisle:"Snack Aisle", tags:["no-cook","vegan","portable","crunchy","value"] },
+
+  { id:187, name:"Dole Mixed Fruit Cup in 100% Juice (4oz)", brand:"Dole", emoji:"🍍", meal:"snack",
+    cal:50,  pro:0,  carb:12, fat:0,  price:0.79, prep:"Open and eat",
+    aisle:"Canned Fruit Aisle", tags:["no-cook","vegan","fresh","low-cal","portable"] },
+
+  { id:188, name:"Meijer Brand Shelled Edamame (refrigerated, 1 cup)", brand:"Meijer", emoji:"🫘", meal:"snack",
+    cal:190, pro:17, carb:14, fat:8,  price:1.99, prep:"Ready to eat (refrigerated)",
+    aisle:"Produce / Refrigerated — Edamame", tags:["no-cook","high-protein","vegan","refrigerated","value"] },
+
+  { id:189, name:"Prairie Farms Chocolate Milk (8oz)", brand:"Prairie Farms", emoji:"🍫", meal:"snack",
+    cal:170, pro:8,  carb:28, fat:4,  price:0.99, prep:"Open and drink",
+    aisle:"Dairy Aisle — Flavored Milk", tags:["no-cook","refrigerated","sweet","portable"] },
+
+  { id:190, name:"Jack Link's Turkey Jerky (1oz pack)", brand:"Jack Link's", emoji:"🦃", meal:"snack",
+    cal:70,  pro:11, carb:3,  fat:1,  price:1.79, prep:"Ready to eat",
+    aisle:"Jerky / Snack Aisle", tags:["no-cook","high-protein","portable","low-cal"] },
+
+  { id:191, name:"Meijer Brand Roasted Chickpeas Sea Salt (1oz)", brand:"Meijer", emoji:"🫘", meal:"snack",
+    cal:130, pro:5,  carb:18, fat:4,  price:1.29, prep:"Open and eat",
+    aisle:"Snack Aisle / Health Foods", tags:["no-cook","vegan","crunchy","portable","value"] },
+
+  { id:192, name:"Pear (medium)", brand:"Produce", emoji:"🍐", meal:"snack",
+    cal:101, pro:1,  carb:27, fat:0,  price:0.79, prep:"Ready to eat",
+    aisle:"Produce Section", tags:["no-cook","fresh","vegan","low-cal"] },
+
+  { id:193, name:"Nature Valley Crunchy Granola Bars Oats & Honey (1 pack)", brand:"Nature Valley", emoji:"🌾", meal:"snack",
+    cal:190, pro:4,  carb:29, fat:7,  price:0.99, prep:"Open and eat",
+    aisle:"Granola Bar Aisle", tags:["no-cook","crunchy","portable","sweet","value"] },
+
+  { id:194, name:"Krave Black Cherry Barbecue Beef Jerky (1oz)", brand:"Krave", emoji:"🥩", meal:"snack",
+    cal:110, pro:9,  carb:12, fat:2,  price:2.49, prep:"Open and eat",
+    aisle:"Jerky / Snack Aisle", tags:["no-cook","high-protein","portable","sweet"] },
+
+  { id:195, name:"Yasso Sea Salt Caramel Frozen Greek Yogurt Bar (1 bar)", brand:"Yasso", emoji:"🍦", meal:"snack",
+    cal:90,  pro:6,  carb:16, fat:1,  price:1.79, prep:"From freezer, eat in 2–3 min",
+    aisle:"Frozen Foods — Frozen Bars & Treats", tags:["no-cook","high-protein","sweet","frozen-treat"] },
+
+  { id:196, name:"Meijer Brand Cherry Tomatoes + Mini Mozzarella Pearls (1 cup)", brand:"Meijer", emoji:"🍅", meal:"snack",
+    cal:130, pro:8,  carb:8,  fat:7,  price:2.49, prep:"Rinse tomatoes, skewer and eat",
+    aisle:"Produce + Dairy — Cheese Section", tags:["no-cook","fresh","vegetarian","low-carb","refrigerated","value"] },
+
+  { id:197, name:"Quaker Cheddar Rice Crisps (1 snack pack)", brand:"Quaker", emoji:"🍙", meal:"snack",
+    cal:130, pro:2,  carb:20, fat:5,  price:0.89, prep:"Open and eat",
+    aisle:"Snack Aisle — Rice Cakes / Crisps", tags:["no-cook","portable","crunchy","value"] },
+
+  { id:198, name:"Chobani Drinkable Yogurt Raspberry (7oz bottle)", brand:"Chobani", emoji:"🍓", meal:"snack",
+    cal:140, pro:12, carb:19, fat:2,  price:2.49, prep:"Shake and drink",
+    aisle:"Dairy Aisle — Yogurt Drinks", tags:["no-cook","high-protein","portable","refrigerated","sweet"] },
+
+  { id:199, name:"Meijer Brand Cucumber Slices + Ranch Dip Cup (2oz)", brand:"Meijer", emoji:"🥒", meal:"snack",
+    cal:100, pro:2,  carb:8,  fat:7,  price:1.29, prep:"Open and dip",
+    aisle:"Produce + Refrigerated Dip Section", tags:["no-cook","fresh","vegetarian","low-cal","value"] },
+
+  { id:200, name:"Planters NUT-rition Almonds, Cashews & Macadamia Mix (1oz)", brand:"Planters", emoji:"🥜", meal:"snack",
+    cal:170, pro:5,  carb:8,  fat:14, price:1.49, prep:"Open and eat",
+    aisle:"Nuts & Snacks Aisle", tags:["no-cook","portable","low-carb","keto","crunchy"] },
+
+  { id:201, name:"Enjoy Life Dark Chocolate Snacking Chocolate (1oz, allergen-free)", brand:"Enjoy Life", emoji:"🍫", meal:"snack",
+    cal:150, pro:2,  carb:17, fat:9,  price:1.49, prep:"Open and eat",
+    aisle:"Natural Foods / Allergy-Friendly Snack Aisle", tags:["no-cook","vegan","portable","sweet"] },
+
+  { id:202, name:"Clif Z Energy Bar Chocolate Chip (1 bar)", brand:"Clif", emoji:"🍪", meal:"snack",
+    cal:120, pro:3,  carb:23, fat:3,  price:0.99, prep:"Open and eat",
+    aisle:"Granola Bar Aisle", tags:["no-cook","portable","sweet","value","vegan"] },
+
+  { id:203, name:"Meijer Brand Unsweetened Applesauce Pouch (3.2oz)", brand:"Meijer", emoji:"🍏", meal:"snack",
+    cal:50,  pro:0,  carb:13, fat:0,  price:0.69, prep:"Squeeze and eat",
+    aisle:"Baby / Snack Aisle — Applesauce", tags:["no-cook","vegan","portable","low-cal","value"] },
+
+  { id:204, name:"Simple Truth Organic Almond Butter Squeeze Pack (1.15oz)", brand:"Simple Truth", emoji:"🥜", meal:"snack",
+    cal:180, pro:6,  carb:6,  fat:16, price:1.49, prep:"Squeeze and eat or dip with apple",
+    aisle:"Nut Butter Aisle — Single Serve Packs", tags:["no-cook","portable","vegan","low-carb","keto"] },
+
+  { id:205, name:"Meijer Brand Veggie Straws (1oz)", brand:"Meijer", emoji:"🥕", meal:"snack",
+    cal:130, pro:1,  carb:18, fat:7,  price:0.79, prep:"Open and eat",
+    aisle:"Snack Aisle", tags:["no-cook","vegan","portable","crunchy","value"] },
+
+  { id:206, name:"Meijer Brand Freeze-Dried Apple Chips (0.5oz)", brand:"Meijer", emoji:"🍎", meal:"snack",
+    cal:55,  pro:0,  carb:14, fat:0,  price:0.99, prep:"Open and eat",
+    aisle:"Snack Aisle / Produce Section", tags:["no-cook","vegan","portable","low-cal","crunchy","value"] },
+
+  { id:207, name:"Siggi's Drinkable Yogurt Vanilla (8oz bottle)", brand:"Siggi's", emoji:"🥛", meal:"snack",
+    cal:160, pro:14, carb:18, fat:3,  price:2.99, prep:"Shake and drink",
+    aisle:"Dairy Aisle — Yogurt Drinks", tags:["no-cook","high-protein","portable","refrigerated","sweet"] },
+
+  { id:208, name:"Meijer Brand Deli Antipasto Snack Cup (olives, salami, cheese)", brand:"Meijer", emoji:"🫒", meal:"snack",
+    cal:150, pro:6,  carb:2,  fat:13, price:2.49, prep:"Open and eat",
+    aisle:"Deli / Refrigerated Snack Section", tags:["no-cook","low-carb","keto","portable","refrigerated","value"] },
+
+  { id:209, name:"Goldfish Cheddar Crackers (1.5oz bag)", brand:"Pepperidge Farm", emoji:"🐟", meal:"snack",
+    cal:190, pro:4,  carb:25, fat:8,  price:1.29, prep:"Open and eat",
+    aisle:"Cracker Aisle", tags:["no-cook","portable","crunchy","value"] },
+
+  { id:210, name:"Meijer Brand Protein Cookie Dough Bites (refrigerated, 1oz)", brand:"Meijer", emoji:"🍪", meal:"snack",
+    cal:170, pro:10, carb:18, fat:7,  price:2.49, prep:"Ready to eat from fridge",
+    aisle:"Refrigerated — Health & Snack Section", tags:["no-cook","high-protein","refrigerated","sweet","portable","value"] },
 ];
 
 // ═══════════════════════════════ STATE ═══════════════════════════════
@@ -1311,6 +1760,33 @@ const FOOD_FLAGS = {
   74:['meat'], 75:['nuts'], 76:['dairy'], 77:['meat'], 78:[],
   79:[], 80:['nuts','peanut','dairy'], 81:['dairy'], 82:['dairy'],
   83:['meat','dairy'], 84:['gluten','nuts','peanut'], 85:['nuts'],
+  // expanded breakfast
+  101:['dairy'], 102:['dairy'], 103:['dairy'], 104:['dairy'], 105:['dairy'],
+  106:['dairy'], 107:['dairy','gluten'], 108:['dairy','nuts'], 109:['gluten','egg','dairy'],
+  110:['gluten','dairy'], 111:['dairy'], 112:['dairy'], 113:['egg'], 114:['nuts','gluten'],
+  115:['dairy'], 116:['gluten','nuts'], 117:['dairy'], 118:['egg','dairy'], 119:[], 120:['gluten'],
+  // expanded lunch
+  121:['fish'], 122:['meat','dairy','gluten'], 123:[], 124:[], 125:['meat','gluten'],
+  126:['gluten','dairy'], 127:['meat'], 128:['meat','dairy'], 129:['dairy'],
+  130:['fish'], 131:['fish','gluten'], 132:['fish','gluten'], 133:['meat','dairy','gluten'],
+  134:['gluten','dairy'], 135:[], 136:['meat'], 137:['nuts'], 138:['meat'],
+  139:['gluten','soy'], 140:['egg','gluten'], 141:['meat'], 142:['dairy','nuts'],
+  143:['meat','dairy','gluten'], 144:['meat'], 145:[], 146:[], 147:['gluten','egg'],
+  148:['meat','dairy'], 149:['fish'], 150:['meat','gluten'],
+  // expanded dinner
+  151:['gluten'], 152:['meat','dairy','gluten'], 153:['meat'], 154:['dairy','gluten'],
+  155:['meat'], 156:['meat'], 157:['dairy','meat'], 158:['dairy'], 159:['meat'],
+  160:['meat','gluten'], 161:['meat','dairy','gluten'], 162:['dairy','gluten'], 163:['meat','dairy'],
+  164:['meat','gluten'], 165:[], 166:['meat','dairy','gluten'], 167:['meat'],
+  168:['dairy','fish'], 169:['fish','meat'], 170:['meat'], 171:['meat','dairy','gluten'],
+  172:['meat','gluten','egg'], 173:['meat','dairy','gluten'], 174:['meat'], 175:[],
+  176:['meat','gluten'], 177:['fish'], 178:['fish'], 179:[], 180:[],
+  // expanded snacks
+  181:[], 182:['dairy'], 183:['meat'], 184:['dairy','meat'], 185:[], 186:['gluten'],
+  187:[], 188:[], 189:['dairy'], 190:['meat'], 191:[], 192:[], 193:['gluten','nuts'],
+  194:['meat'], 195:['dairy'], 196:['dairy'], 197:['gluten'], 198:['dairy'], 199:['dairy'],
+  200:['nuts'], 201:[], 202:['gluten'], 203:[], 204:['nuts'], 205:[], 206:[],
+  207:['dairy'], 208:['meat','dairy'], 209:['dairy','gluten'], 210:['dairy','gluten'],
 };
 
 // ─── Taste / texture / dislike attributes per food ID ────────────────────────
@@ -1406,6 +1882,120 @@ const FOOD_ATTRS = {
   83: { tags:['savory'],                         dislikes_cat:[] },
   84: { tags:['sweet','savory','crunchy'],       dislikes_cat:[] },
   85: { tags:['fresh','sweet'],                  dislikes_cat:[] },
+  // expanded breakfast
+  101: { tags:['sweet','fresh','smooth'],         dislikes_cat:['yogurt'] },
+  102: { tags:['fresh','smooth'],                 dislikes_cat:['yogurt'] },
+  103: { tags:['sweet','rich','smooth'],          dislikes_cat:['shakes'] },
+  104: { tags:['sweet','smooth'],                 dislikes_cat:['shakes'] },
+  105: { tags:['fresh','savory','smooth'],        dislikes_cat:['yogurt'] },
+  106: { tags:['sweet','fresh','smooth'],         dislikes_cat:['yogurt'] },
+  107: { tags:['sweet','rich','chewy'],           dislikes_cat:['bars'] },
+  108: { tags:['sweet','rich','chewy'],           dislikes_cat:['bars'] },
+  109: { tags:['savory','hearty'],                dislikes_cat:['frozen'] },
+  110: { tags:['savory','hearty'],                dislikes_cat:['frozen'] },
+  111: { tags:['fresh','smooth','rich'],          dislikes_cat:['yogurt'] },
+  112: { tags:['sweet','smooth','fresh'],         dislikes_cat:['yogurt'] },
+  113: { tags:['savory','hearty'],                dislikes_cat:[] },
+  114: { tags:['sweet','crunchy','hearty'],       dislikes_cat:[] },
+  115: { tags:['sweet','rich','smooth'],          dislikes_cat:['yogurt'] },
+  116: { tags:['sweet','hearty'],                 dislikes_cat:[] },
+  117: { tags:['sweet','smooth'],                 dislikes_cat:['yogurt'] },
+  118: { tags:['savory','fresh'],                 dislikes_cat:[] },
+  119: { tags:['sweet','smooth'],                 dislikes_cat:['shakes'] },
+  120: { tags:['sweet','hearty'],                 dislikes_cat:[] },
+  // expanded lunch
+  121: { tags:['savory','fresh'],                 dislikes_cat:['canned-fish'] },
+  122: { tags:['savory','hearty','fresh'],        dislikes_cat:[] },
+  123: { tags:['savory','fresh','hearty'],        dislikes_cat:['soup'] },
+  124: { tags:['savory','fresh','crunchy'],       dislikes_cat:[] },
+  125: { tags:['savory','hearty'],                dislikes_cat:['frozen','rotisserie'] },
+  126: { tags:['savory','hearty'],                dislikes_cat:['soup'] },
+  127: { tags:['savory','fresh','hearty'],        dislikes_cat:[] },
+  128: { tags:['savory','fresh','hearty'],        dislikes_cat:['rotisserie'] },
+  129: { tags:['savory','hearty'],                dislikes_cat:['frozen','rotisserie'] },
+  130: { tags:['fresh','savory'],                 dislikes_cat:[] },
+  131: { tags:['savory','fresh'],                 dislikes_cat:['canned-fish'] },
+  132: { tags:['savory','fresh'],                 dislikes_cat:['canned-fish'] },
+  133: { tags:['savory','crunchy','fresh'],       dislikes_cat:[] },
+  134: { tags:['savory','hearty'],                dislikes_cat:['frozen'] },
+  135: { tags:['savory','hearty'],                dislikes_cat:[] },
+  136: { tags:['savory','hearty'],                dislikes_cat:['soup'] },
+  137: { tags:['savory','fresh'],                 dislikes_cat:[] },
+  138: { tags:['savory','hearty'],                dislikes_cat:[] },
+  139: { tags:['savory','hearty'],                dislikes_cat:['frozen'] },
+  140: { tags:['savory','fresh','smooth'],        dislikes_cat:[] },
+  141: { tags:['savory','hearty'],                dislikes_cat:['frozen','rotisserie'] },
+  142: { tags:['fresh','sweet','smooth'],         dislikes_cat:['yogurt'] },
+  143: { tags:['savory','fresh','smooth'],        dislikes_cat:[] },
+  144: { tags:['savory','hearty'],                dislikes_cat:['frozen'] },
+  145: { tags:['savory','fresh','hearty'],        dislikes_cat:[] },
+  146: { tags:['savory','hearty','smooth'],       dislikes_cat:['soup'] },
+  147: { tags:['savory','fresh','hearty'],        dislikes_cat:[] },
+  148: { tags:['savory','fresh'],                 dislikes_cat:[] },
+  149: { tags:['savory','hearty'],                dislikes_cat:['canned-fish'] },
+  150: { tags:['savory','hearty'],                dislikes_cat:['soup'] },
+  // expanded dinner
+  151: { tags:['savory','hearty','spicy'],        dislikes_cat:['frozen'] },
+  152: { tags:['savory','rich','hearty'],         dislikes_cat:['frozen'] },
+  153: { tags:['savory','hearty'],                dislikes_cat:['frozen','rotisserie'] },
+  154: { tags:['savory','rich','hearty','smooth'],dislikes_cat:['frozen'] },
+  155: { tags:['savory','hearty'],                dislikes_cat:['soup'] },
+  156: { tags:['savory','hearty'],                dislikes_cat:['soup'] },
+  157: { tags:['savory','rich','hearty'],         dislikes_cat:['soup'] },
+  158: { tags:['savory','spicy','hearty'],        dislikes_cat:['frozen'] },
+  159: { tags:['savory','spicy','hearty','rich'], dislikes_cat:['frozen'] },
+  160: { tags:['savory','sweet','hearty'],        dislikes_cat:['frozen','rotisserie'] },
+  161: { tags:['savory','hearty'],                dislikes_cat:['frozen'] },
+  162: { tags:['savory','rich','hearty'],         dislikes_cat:['frozen'] },
+  163: { tags:['savory','hearty'],                dislikes_cat:[] },
+  164: { tags:['savory','hearty'],                dislikes_cat:['frozen'] },
+  165: { tags:['savory','hearty'],                dislikes_cat:['soup'] },
+  166: { tags:['savory','rich','hearty'],         dislikes_cat:['frozen'] },
+  167: { tags:['savory','spicy','hearty'],        dislikes_cat:['frozen'] },
+  168: { tags:['savory','rich','hearty'],         dislikes_cat:['soup'] },
+  169: { tags:['savory','hearty'],                dislikes_cat:['frozen'] },
+  170: { tags:['savory','spicy','hearty'],        dislikes_cat:['frozen'] },
+  171: { tags:['savory','rich','hearty'],         dislikes_cat:['frozen'] },
+  172: { tags:['savory','sweet','hearty'],        dislikes_cat:['frozen'] },
+  173: { tags:['savory','hearty'],                dislikes_cat:['frozen'] },
+  174: { tags:['savory','hearty'],                dislikes_cat:[] },
+  175: { tags:['savory','hearty'],                dislikes_cat:['frozen'] },
+  176: { tags:['savory','hearty'],                dislikes_cat:['soup'] },
+  177: { tags:['savory','hearty'],                dislikes_cat:['canned-fish'] },
+  178: { tags:['savory','hearty','rich'],         dislikes_cat:['frozen'] },
+  179: { tags:['savory','hearty'],                dislikes_cat:['frozen','soup'] },
+  180: { tags:['savory','hearty'],                dislikes_cat:[] },
+  // expanded snacks
+  181: { tags:['sweet','fresh'],                  dislikes_cat:[] },
+  182: { tags:['savory','smooth'],                dislikes_cat:[] },
+  183: { tags:['savory','rich'],                  dislikes_cat:[] },
+  184: { tags:['savory','smooth'],                dislikes_cat:[] },
+  185: { tags:['savory','crunchy'],               dislikes_cat:[] },
+  186: { tags:['savory','crunchy'],               dislikes_cat:[] },
+  187: { tags:['sweet','fresh'],                  dislikes_cat:[] },
+  188: { tags:['savory','fresh'],                 dislikes_cat:[] },
+  189: { tags:['sweet','rich','smooth'],          dislikes_cat:[] },
+  190: { tags:['savory','chewy'],                 dislikes_cat:[] },
+  191: { tags:['savory','crunchy'],               dislikes_cat:[] },
+  192: { tags:['sweet','fresh'],                  dislikes_cat:[] },
+  193: { tags:['sweet','crunchy'],                dislikes_cat:['bars'] },
+  194: { tags:['sweet','savory','chewy'],         dislikes_cat:[] },
+  195: { tags:['sweet','smooth','fresh'],         dislikes_cat:['yogurt'] },
+  196: { tags:['fresh','savory'],                 dislikes_cat:[] },
+  197: { tags:['savory','crunchy'],               dislikes_cat:[] },
+  198: { tags:['sweet','fresh','smooth'],         dislikes_cat:['yogurt'] },
+  199: { tags:['fresh','savory','smooth'],        dislikes_cat:[] },
+  200: { tags:['savory','crunchy'],               dislikes_cat:[] },
+  201: { tags:['sweet','rich'],                   dislikes_cat:[] },
+  202: { tags:['sweet','chewy'],                  dislikes_cat:['bars'] },
+  203: { tags:['sweet','fresh'],                  dislikes_cat:[] },
+  204: { tags:['savory','smooth'],                dislikes_cat:[] },
+  205: { tags:['savory','crunchy'],               dislikes_cat:[] },
+  206: { tags:['sweet','crunchy','fresh'],        dislikes_cat:[] },
+  207: { tags:['sweet','smooth','fresh'],         dislikes_cat:['yogurt'] },
+  208: { tags:['savory','fresh'],                 dislikes_cat:[] },
+  209: { tags:['savory','crunchy'],               dislikes_cat:[] },
+  210: { tags:['sweet','rich'],                   dislikes_cat:['bars'] },
 };
 
 // Returns a personalization score for a food based on user taste prefs.
@@ -1431,6 +2021,10 @@ function preferenceScore(food, prefs) {
   // Meal style bonus
   if (prefs.mealStyle === 'portable' && food.tags.includes('portable')) score += 4;
   if (prefs.mealStyle === 'meals'    && (food.tags.includes('warm') || attrs.tags.includes('hearty'))) score += 4;
+  // Plan vibe bonus (+5 — strong signal from the archetype pick)
+  if (prefs.planVibe === 'grab-go'      && (food.tags.includes('portable') || food.tags.includes('no-cook'))) score += 5;
+  if (prefs.planVibe === 'fresh-light'  && (food.tags.includes('fresh') || food.tags.includes('low-cal'))) score += 5;
+  if (prefs.planVibe === 'warm-hearty'  && (food.tags.includes('warm') || attrs.tags.includes('hearty'))) score += 5;
   // User rated this 👍 — boost it
   if (rating === 1) score += 6;
   return score;
@@ -1457,14 +2051,14 @@ function passesRestrictions(food, restrictions) {
 function buildOneDayPlan(target, diet, restrictions, prefs = {}) {
   function eligible(f) {
     if (!passesRestrictions(f, restrictions)) return false;
-    if (preferenceScore(f, prefs) <= -9000) return false; // hard disliked category
+    if (preferenceScore(f, prefs) <= -9000) return false;
     if (diet === 'high-protein') return f.pro >= 8 || f.cal < 120;
     if (diet === 'low-carb')     return f.carb <= 20;
     if (diet === 'vegetarian')   return f.tags.includes('vegetarian') || f.tags.includes('vegan');
     return true;
   }
-  function fillSlot(mealType, budget, usedIds, maxItems) {
-    // Cascading fallback: full filter → drop diet → drop dislikes → drop all
+  // familyCounts tracks how many times each food family (dislikes_cat[0]) appears today
+  function fillSlot(mealType, budget, usedIds, maxItems, familyCounts) {
     let pool = FOODS.filter(f => f.meal === mealType && eligible(f));
     if (pool.length < 2) pool = FOODS.filter(f => f.meal === mealType && passesRestrictions(f, restrictions) && preferenceScore(f, prefs) > -9000);
     if (pool.length < 2) pool = FOODS.filter(f => f.meal === mealType && passesRestrictions(f, restrictions));
@@ -1473,17 +2067,23 @@ function buildOneDayPlan(target, diet, restrictions, prefs = {}) {
     while (picked.length < maxItems) {
       const remaining = budget - spent;
       if (remaining < 60) break;
-      const available = pool.filter(f => !usedIds.has(f.id) && !picked.find(p => p.id === f.id) && f.cal <= remaining);
-      if (!available.length) break;
-      // Score: calorie fit + protein bonus + AI preference score
+      const notUsed = pool.filter(f => !usedIds.has(f.id) && !picked.find(p => p.id === f.id) && f.cal <= remaining);
+      if (!notUsed.length) break;
+      // Prefer foods whose family hasn't appeared yet today; fall back if none available
+      const family = f => (FOOD_ATTRS[f.id]?.dislikes_cat || [])[0];
+      const varied = notUsed.filter(f => { const fam = family(f); return !fam || (familyCounts[fam] || 0) < 1; });
+      const available = varied.length ? varied : notUsed;
       available.sort((a, b) => {
-        const score = f => -Math.abs(f.cal - remaining) + f.pro * 2 + preferenceScore(f, prefs) * 2 + (passesRestrictions(f, restrictions) ? 10 : 0);
+        const score = f => -Math.abs(f.cal - remaining) + f.pro * 2 + preferenceScore(f, prefs) * 2;
         return score(b) - score(a);
       });
       const top = available.slice(0, 3);
-      picked.push(top[Math.floor(Math.random() * top.length)]);
-      usedIds.add(picked[picked.length-1].id);
-      spent += picked[picked.length-1].cal;
+      const chosen = top[Math.floor(Math.random() * top.length)];
+      picked.push(chosen);
+      usedIds.add(chosen.id);
+      spent += chosen.cal;
+      const fam = family(chosen);
+      if (fam) familyCounts[fam] = (familyCounts[fam] || 0) + 1;
     }
     return picked;
   }
@@ -1494,17 +2094,18 @@ function buildOneDayPlan(target, diet, restrictions, prefs = {}) {
     snack:     target - Math.round(target * 0.25) - Math.round(target * 0.35) - Math.round(target * 0.30),
   };
   const usedIds = new Set();
+  const familyCounts = {}; // shared across all slots to prevent same family appearing multiple times per day
   return [
-    ...fillSlot('breakfast', budgets.breakfast, usedIds, 2).map(f => ({ ...f, _slot: 'breakfast' })),
-    ...fillSlot('lunch',     budgets.lunch,     usedIds, 2).map(f => ({ ...f, _slot: 'lunch'     })),
-    ...fillSlot('dinner',    budgets.dinner,    usedIds, 2).map(f => ({ ...f, _slot: 'dinner'    })),
-    ...fillSlot('snack',     budgets.snack,     usedIds, 3).map(f => ({ ...f, _slot: 'snack'     })),
+    ...fillSlot('breakfast', budgets.breakfast, usedIds, 2, familyCounts).map(f => ({ ...f, _slot: 'breakfast' })),
+    ...fillSlot('lunch',     budgets.lunch,     usedIds, 2, familyCounts).map(f => ({ ...f, _slot: 'lunch'     })),
+    ...fillSlot('dinner',    budgets.dinner,    usedIds, 2, familyCounts).map(f => ({ ...f, _slot: 'dinner'    })),
+    ...fillSlot('snack',     budgets.snack,     usedIds, 3, familyCounts).map(f => ({ ...f, _slot: 'snack'     })),
   ];
 }
 
 function getPrefs() {
   const p = state.profile || {};
-  return { dislikes: p.dislikes || [], tastes: p.tastes || [], mealStyle: p.mealStyle || 'mixed' };
+  return { dislikes: p.dislikes || [], tastes: p.tastes || [], mealStyle: p.mealStyle || 'mixed', planVibe: p.planVibe || '' };
 }
 
 function generatePlan() {
@@ -2094,7 +2695,7 @@ function meijerUrl(food) {
 }
 
 // ═══════════════════════════ INTRO QUIZ ═══════════════════════════
-const QUIZ_TOTAL = 10;
+const QUIZ_TOTAL = 11;
 let quizStep = 0, quizData = {};
 
 function showQuiz() {
@@ -2128,7 +2729,8 @@ function startRetakeQuiz() {
     restrictions: p.restrictions || [],
     dislikes:  p.dislikes  || [],
     tastes:    p.tastes    || [],
-    mealStyle: p.mealStyle || ''
+    mealStyle: p.mealStyle || '',
+    planVibe:  p.planVibe  || ''
   };
   quizStep = 6; // jump straight to the preferences steps
   document.getElementById('quiz-overlay').style.display = 'flex';
@@ -2322,7 +2924,48 @@ function renderQuizStep() {
       ${qo('mixed',   'mealStyle','🔄','Mix of both','Depends on the time of day')}
     </div>`,
 
-    // 10: Summary — computed on render
+    // 10: Vibe — pick your meal plan style
+    (() => {
+      const vibes = [
+        {
+          val: 'grab-go',
+          icon: '🏃',
+          title: 'Grab & Go',
+          sub: 'Portable, quick, no fuss — eat on the move',
+          items: ['🥤 Protein shake', '🐟 Tuna pouch + crackers', '❄️ Frozen chicken bowl', '🥩 Beef jerky'],
+        },
+        {
+          val: 'fresh-light',
+          icon: '🥗',
+          title: 'Fresh & Light',
+          sub: 'Clean, feel-good food that doesn\'t weigh you down',
+          items: ['🍓 Greek yogurt + fruit', '🥗 Caesar salad kit', '🍗 Lean protein bowl', '🍎 Apple + almonds'],
+        },
+        {
+          val: 'warm-hearty',
+          icon: '🍲',
+          title: 'Warm & Filling',
+          sub: 'Actual meals — hot, satisfying, like real food',
+          items: ['🥣 Oatmeal cup', '🍜 Soup + crackers', '🥙 Power bowl', '🧀 Cheese + nuts'],
+        },
+      ];
+      return `<div class="quiz-step">
+        <h2>Pick your vibe 🎯</h2>
+        <p class="quiz-sub">Which of these sounds most like how you'd eat?</p>
+        ${vibes.map(v => `
+          <button class="quiz-option vibe-plan${quizData.planVibe === v.val ? ' selected' : ''}"
+            onclick="selectQuizOpt('planVibe','${v.val}',this)">
+            <span class="qo-icon" style="font-size:28px;margin-top:2px">${v.icon}</span>
+            <div style="flex:1">
+              <div style="font-size:16px;font-weight:800;margin-bottom:2px">${v.title}</div>
+              <div class="qo-sub">${v.sub}</div>
+              <div class="vibe-examples">${v.items.map(i=>`<span class="vibe-ex">${i}</span>`).join('')}</div>
+            </div>
+          </button>`).join('')}
+      </div>`;
+    })(),
+
+    // 11: Summary — computed on render
     (() => {
       if (!quizData.cw || !quizData.gw || quizData.ft == null || quizData.in == null || !quizData.age || !quizData.sex || !quizData.act) {
         return `<div class="quiz-step"><h2>Almost done!</h2><p class="quiz-sub">Please go back and fill in all fields.</p></div>`;
@@ -2338,10 +2981,14 @@ function renderQuizStep() {
       quizData._calc = { tdee, deficit, target, lbsPerWeek, weeks, h };
       const dislikes = quizData.dislikes || [];
       const tastes   = quizData.tastes   || [];
+      const vibeMap  = { 'grab-go':'🏃 Grab & Go', 'fresh-light':'🥗 Fresh & Light', 'warm-hearty':'🍲 Warm & Filling' };
+      const vibeLabel = vibeMap[quizData.planVibe] || '';
       const dislikesHtml = dislikes.length
-        ? `<div style="margin-top:8px;font-size:12px;color:var(--muted)">🚫 Excluding: ${dislikes.join(', ')}</div>` : '';
+        ? `<div style="margin-top:6px;font-size:12px;color:var(--muted)">🚫 Excluding: ${dislikes.join(', ')}</div>` : '';
       const tastesHtml = tastes.length
         ? `<div style="margin-top:4px;font-size:12px;color:var(--muted)">✨ Boosting: ${tastes.join(', ')}</div>` : '';
+      const vibeHtml = vibeLabel
+        ? `<div style="margin-top:4px;font-size:12px;color:var(--muted)">🎯 Vibe: ${vibeLabel}</div>` : '';
       return `<div class="quiz-step">
         <h2>Your plan is ready 🎉</h2>
         <p class="quiz-sub">Based on your stats, here's what we'll aim for:</p>
@@ -2354,10 +3001,10 @@ function renderQuizStep() {
         <div style="background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);border-radius:12px;padding:12px 14px;font-size:12px;color:#86efac;line-height:1.7">
           Formula: Mifflin-St Jeor · TDEE ${tdee} cal · ${deficit} cal deficit · 3,500 cal = 1 lb fat
         </div>
-        ${(dislikes.length || tastes.length) ? `
+        ${(dislikes.length || tastes.length || vibeLabel) ? `
         <div style="background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.2);border-radius:12px;padding:12px 14px;margin-top:12px">
-          <div style="font-size:12px;font-weight:700;color:#a78bfa;margin-bottom:4px">🤖 Your AI Taste Profile</div>
-          ${dislikesHtml}${tastesHtml}
+          <div style="font-size:12px;font-weight:700;color:#a78bfa;margin-bottom:4px">🤖 Your Taste Profile</div>
+          ${vibeHtml}${dislikesHtml}${tastesHtml}
         </div>` : ''}
       </div>`;
     })(),
@@ -2367,9 +3014,15 @@ function renderQuizStep() {
 }
 
 function selectQuizOpt(key, val, el) {
-  quizData[key] = val;
-  el.closest('.quiz-step').querySelectorAll('.quiz-option').forEach(b => b.classList.remove('selected'));
-  el.classList.add('selected');
+  if (quizData[key] === val) {
+    // Tap again → deselect
+    delete quizData[key];
+    el.classList.remove('selected');
+  } else {
+    quizData[key] = val;
+    el.closest('.quiz-step').querySelectorAll('.quiz-option').forEach(b => b.classList.remove('selected'));
+    el.classList.add('selected');
+  }
 }
 
 function toggleRestriction(val, el) {
@@ -2386,6 +3039,7 @@ function toggleQuizArray(key, val, el) {
   if (idx === -1) { quizData[key].push(val); el.classList.add('selected'); }
   else            { quizData[key].splice(idx, 1); el.classList.remove('selected'); }
 }
+
 
 function quizBack() {
   if (quizStep > 0) { quizStep--; renderQuizStep(); }
@@ -2425,6 +3079,7 @@ function quizFinish() {
     dislikes: quizData.dislikes || [],
     tastes:   quizData.tastes   || [],
     mealStyle: quizData.mealStyle || 'mixed',
+    planVibe:  quizData.planVibe  || '',
     tdee: c.tdee,                     target: c.target,
     deficit: c.deficit,               lbsPerWeek: c.lbsPerWeek,
     quizVersion: 2,
