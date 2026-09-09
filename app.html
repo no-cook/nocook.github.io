@@ -339,10 +339,10 @@
   .streak-zero  { background:rgba(100,116,139,0.1); border-color:rgba(100,116,139,0.25); color:var(--muted); }
 
   @media (max-width: 768px) {
-    /* Applying overflow-x:hidden to both html AND body keeps the viewport as the
-       scroll container. Setting it only on body causes body to become the scroll
-       container, which breaks iOS Safari/PWA scrolling (content trapped below fold). */
-    html, body { overflow-x: hidden; }
+    /* overflow-x:clip prevents horizontal overflow without creating a scroll container.
+       Unlike overflow-x:hidden, clip does not promote the element to a scroll container,
+       so iOS Safari touch scrolling continues to work normally. */
+    html, body { overflow-x: clip; }
     .stats-strip { grid-template-columns: 1fr 1fr; }
     .form-grid { grid-template-columns: 1fr; }
     .tip-grid { grid-template-columns: 1fr; }
