@@ -381,7 +381,7 @@
 <body>
 
 <!-- Auth gate: shown while Firebase checks sign-in state -->
-<div id="auth-gate" style="position:fixed;inset:0;background:#0f172a;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;gap:16px">
+<div id="auth-gate" style="position:fixed;top:0;right:0;bottom:0;left:0;background:#0f172a;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;gap:16px">
   <div style="font-size:28px;font-weight:900;color:#22c55e;letter-spacing:-0.5px">NoCook</div>
   <div style="width:32px;height:32px;border:3px solid #334155;border-top-color:#22c55e;border-radius:50%;animation:spin 0.7s linear infinite"></div>
   <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
@@ -3422,6 +3422,8 @@ function onSignedIn(user) {
   }).catch(() => {
     updateSyncStatus('error');
     showSyncError();
+    if (!state.profile) showQuiz();
+    else { showPage('home'); maybeShowQuizPromo(); }
   }).finally(() => {
     startLiveSync(); // always start listener, even if initial load failed
   });
