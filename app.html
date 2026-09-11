@@ -339,10 +339,10 @@
   .streak-zero  { background:rgba(100,116,139,0.1); border-color:rgba(100,116,139,0.25); color:var(--muted); }
 
   @media (max-width: 768px) {
-    /* overflow-x:clip on body prevents horizontal overflow without creating a scroll
-       container. Applying it only to body (not html) avoids an iOS Safari bug where
-       overflow on html breaks position:fixed for bottom-nav and other fixed elements. */
-    body { overflow-x: clip; }
+    /* overflow-x:clip on html only — prevents horizontal overflow without affecting
+       position:fixed descendants. Setting it on body (alone or with html) breaks
+       position:fixed on iOS Safari, causing the bottom nav to render in normal flow. */
+    html { overflow-x: clip; }
     .stats-strip { grid-template-columns: 1fr 1fr; }
     .form-grid { grid-template-columns: 1fr; }
     .tip-grid { grid-template-columns: 1fr; }
